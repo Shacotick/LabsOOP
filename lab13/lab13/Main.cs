@@ -17,7 +17,7 @@ namespace lab13
         public static double lvivFull = 0;
         public static double odesaFull = 0;
 
-        public static string path = @"C:\Users\Vitalii\source\repos\lab13\lab13/savedData.txt";
+        public static string path = "savedData.txt";
 
         public Main()
         {
@@ -61,15 +61,32 @@ namespace lab13
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.kievPrice.Text = (Price.kievV * Time.kievT).ToString();
-            this.lvivPrice.Text = (Price.lvivV * Time.lvivT).ToString();
-            this.odesaPrice.Text = (Price.odesaV * Time.odesaT).ToString();
-            
-            this.common.Text = (
-                int.Parse(this.kievPrice.Text) + 
-                int.Parse(this.lvivPrice.Text) + 
-                int.Parse(this.odesaPrice.Text)
-                ).ToString();
+                double
+                kiev_common = Price.kievV * Time.kievT,
+                lviv_common = Price.lvivV * Time.lvivT,
+                odesa_common = Price.odesaV * Time.odesaT;
+
+                if (Price.kievV < 0 || Time.kievT < 0) this.kievPrice.Text = "Не вірні дані";
+                else this.kievPrice.Text = (kiev_common).ToString();
+
+                if (Price.lvivV < 0 || Time.lvivT < 0) this.lvivPrice.Text = "Не вірні дані";
+                else this.lvivPrice.Text = (lviv_common).ToString();
+
+                if (Price.odesaV < 0 || Time.odesaT < 0) this.odesaPrice.Text = "Не вірні дані";
+                else this.odesaPrice.Text = (odesa_common).ToString();
+
+            try
+            {
+                this.common.Text = (
+                    int.Parse(this.kievPrice.Text) +
+                    int.Parse(this.lvivPrice.Text) +
+                    int.Parse(this.odesaPrice.Text)
+                    ).ToString();
+            }
+            catch(Exception)
+            {
+                this.common.Text = "Не вірні дані";
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -87,8 +104,17 @@ namespace lab13
 
         private void button5_Click(object sender, EventArgs e)
         {
-            using (StreamWriter stream = new StreamWriter(path, true))
-                stream.WriteLine(this.fio_reverse.Text);
+            try
+            {
+                using (StreamWriter stream = new StreamWriter(path, true))
+                    stream.WriteLine(this.fio_reverse.Text);
+            }
+            catch(Exception)
+            {
+                path = "savedData.txt";
+                using (StreamWriter stream = new StreamWriter(path, true))
+                    stream.WriteLine(this.fio_reverse.Text);
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)

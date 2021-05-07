@@ -22,7 +22,7 @@ namespace lab13
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            this.textBox1.Text = Main.path;
         }
 
         private void Exit_Bottom_Click(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace lab13
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Main.path = textBox1.Text;
+            Main.path = this.textBox1.Text;
             this.Close();
         }
 
@@ -61,5 +61,6 @@ namespace lab13
             if (File.Exists(Main.path))
                 Process.Start(Main.path);
         }
+
     }
 }
